@@ -330,24 +330,6 @@ RULES:
 ONLY valid JSON, no markdown:
 {"company_name":"str","role_title":"str","date":"April 23, 2026","salutation":"Dear [name or Hiring Manager],","body":"str (use \\n\\n between paragraphs)","closing":"Sincerely,"}`;
 
-var C = {
-  bg: "#08090E", surface: "#10121A", surfaceR: "#161924",
-  border: "#1E2436", borderH: "#2D3650",
-  accent: "#00ff9d", accentD: "#00cc7a", accentS: "rgba(0,255,157,0.07)",
-  text: "#E4E8F1", textM: "#8D97AE", textD: "#586278",
-  success: "#2DD4A0", error: "#F06565", errorS: "rgba(240,101,101,0.06)",
-  emerald: "#2DD4A0", emeraldS: "rgba(45,212,160,0.07)",
-  amber: "#F5B731", amberS: "rgba(245,183,49,0.07)",
-  purple: "#A78BFA", purpleS: "rgba(167,139,250,0.07)",
-// ===== COLORS =====
-var C = {
-  bg: "#0a0e14", surface: "#111827", border: "#1e293b",
-  accent: "#00ff9d", accentD: "#00cc7a",
-  text: "#e5e7eb", textM: "#9ca3af", textD: "#6b7280",
-  success: "#10b981", error: "#ef4444"
-};
-
-
 // ===== TECHY COLOR SCHEME =====
 var C = {
   bg: "#050609", surface: "#0c0e16", surfaceG: "rgba(15,18,30,0.7)",
