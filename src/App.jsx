@@ -749,7 +749,7 @@ export default function App() {
       <div style={{ borderBottom: "1px solid " + C.border, padding: "12px 20px", background: "rgba(12,14,22,0.9)", position: "sticky", top: 0, zIndex: 50 }}>
         <div style={{ maxWidth: 960, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }} onClick={goHome}>
-            <div style={{ width: 34, height: 34, borderRadius: 8, background: "linear-gradient(135deg, " + C.accent + ", #00cc7a")", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 700, color: "#fff", boxShadow: "0 0 15px rgba(0,255,157,0.2)" }}>Rf</div>
+            <div style={{ width: 34, height: 34, borderRadius: 8, background: "linear-gradient(135deg, " + C.accent + ", #00cc7a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 700, color: "#fff", boxShadow: "0 0 15px rgba(0,255,157,0.2)" }}>Rf</div>
             <div>
               <div style={{ fontSize: 15, fontWeight: 700, letterSpacing: "-0.02em" }}>ResumeFit</div>
               <div style={{ fontSize: 9, color: C.accent, letterSpacing: "0.12em", fontFamily: "'JetBrains Mono',monospace" }}>{"// AI CAREER PLATFORM"}</div>
@@ -758,7 +758,7 @@ export default function App() {
           <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
             <div style={{ fontSize: 11, fontFamily: "'JetBrains Mono',monospace", color: C.textD, marginRight: 8 }}>{clock.toLocaleTimeString("en-CA", { hour12: false })}</div>
             <button onClick={goHome} style={neonBtn(view === "home" ? C.accent : C.textD, false)}>{"{ dashboard }"}</button>
-            <button onClick={reset} style={{ padding: "8px 18px", borderRadius: 8, border: "none", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", background: "linear-gradient(135deg, " + C.accent + ", #00cc7a")", color: "#fff", boxShadow: C.glow }}>{"+ new_resume()"}</button>
+            <button onClick={reset} style={{ padding: "8px 18px", borderRadius: 8, border: "none", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", background: "linear-gradient(135deg, " + C.accent + ", #00cc7a)", color: "#fff", boxShadow: C.glow }}>{"+ new_resume()"}</button>
           </div>
         </div>
       </div>
@@ -886,7 +886,7 @@ export default function App() {
                 </div>
               </div>
               <div style={{ marginTop: 20, textAlign: "right" }}>
-                <button onClick={handleGo} disabled={status === "loading"} style={{ padding: "12px 32px", borderRadius: 10, border: "none", fontSize: 14, fontWeight: 700, cursor: status === "loading" ? "wait" : "pointer", fontFamily: "inherit", background: "linear-gradient(135deg," + C.accent + ",#00cc7a")", color: "#fff" }}>
+                <button onClick={handleGo} disabled={status === "loading"} style={{ padding: "12px 32px", borderRadius: 10, border: "none", fontSize: 14, fontWeight: 700, cursor: status === "loading" ? "wait" : "pointer", fontFamily: "inherit", background: "linear-gradient(135deg," + C.accent + ",#00cc7a)", color: "#fff" }}>
                   {status === "loading" ? prog : genType === "both" ? "Generate Both" : "Generate Resume"}
                 </button>
               </div>
