@@ -752,13 +752,13 @@ export default function App() {
             <div style={{ width: 34, height: 34, borderRadius: 8, background: "linear-gradient(135deg, " + C.accent + ", #00cc7a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 700, color: "#fff", boxShadow: "0 0 15px rgba(0,255,157,0.2)" }}>Rf</div>
             <div>
               <div style={{ fontSize: 15, fontWeight: 700, letterSpacing: "-0.02em" }}>ResumeFit</div>
-              <div style={{ fontSize: 9, color: C.accent, letterSpacing: "0.12em", fontFamily: "'JetBrains Mono',monospace" }}>{"// AI CAREER PLATFORM"}</div>
+              <div style={{ fontSize: 9, color: C.accent, letterSpacing: "0.08em" }}>{"AI CAREER PLATFORM"}</div>
             </div>
           </div>
           <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-            <div style={{ fontSize: 11, fontFamily: "'JetBrains Mono',monospace", color: C.textD, marginRight: 8 }}>{clock.toLocaleTimeString("en-CA", { hour12: false })}</div>
-            <button onClick={goHome} style={neonBtn(view === "home" ? C.accent : C.textD, false)}>{"{ dashboard }"}</button>
-            <button onClick={reset} style={{ padding: "8px 18px", borderRadius: 8, border: "none", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", background: "linear-gradient(135deg, " + C.accent + ", #00cc7a)", color: "#fff", boxShadow: C.glow }}>{"+ new_resume()"}</button>
+            <div style={{ fontSize: 11, color: C.textD, marginRight: 8 }}>{clock.toLocaleTimeString("en-CA", { hour12: false })}</div>
+            <button onClick={goHome} style={neonBtn(view === "home" ? C.accent : C.textD, false)}>{"Dashboard"}</button>
+            <button onClick={reset} style={{ padding: "8px 18px", borderRadius: 8, border: "none", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", background: "linear-gradient(135deg, " + C.accent + ", #00cc7a)", color: "#fff", boxShadow: C.glow }}>{"+ New Resume"}</button>
           </div>
         </div>
       </div>
@@ -769,26 +769,26 @@ export default function App() {
         {view === "home" && (
           <div>
             {/* Terminal greeting */}
-            <div style={{ fontFamily: "'JetBrains Mono',monospace", marginBottom: 24 }}>
-              <div style={{ fontSize: 11, color: C.accent }}>{"$ resumefit --status"}</div>
+            <div style={{ marginBottom: 24 }}>
+              <div style={{ fontSize: 11, color: C.accent }}>{""}</div>
               <div style={{ fontSize: 22, fontWeight: 700, marginTop: 4 }}>{"Welcome back, "}
                 <span style={{ color: C.accent }}>Zeus</span>
               </div>
-              <div style={{ fontSize: 12, color: C.textD, marginTop: 2 }}>{daysToGrad + " days until graduation // " + new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</div>
+              <div style={{ fontSize: 12, color: C.textD, marginTop: 2 }}>{daysToGrad + " days until graduation  •  " + new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</div>
             </div>
 
             {/* Stats grid */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 20 }}>
               {[
-                { label: "days_to_grad", val: daysToGrad, color: C.accent },
-                { label: "certs_completed", val: completedCerts + "/" + CERTS.length, color: C.neon },
-                { label: "certs_remaining", val: CERTS.length - completedCerts, color: C.amber },
-                { label: "total_projects", val: MD.projects.length, color: C.purple }
+                { label: "Days to Grad", val: daysToGrad, color: C.accent },
+                { label: "Certs Completed", val: completedCerts + "/" + CERTS.length, color: C.neon },
+                { label: "Certs Remaining", val: CERTS.length - completedCerts, color: C.amber },
+                { label: "Total Projects", val: MD.projects.length, color: C.purple }
               ].map(function(st, i) {
                 return <div key={i} style={Object.assign({}, glassCard, { position: "relative", overflow: "hidden" })}>
                   <div style={{ position: "absolute", top: -15, right: -15, width: 60, height: 60, borderRadius: "50%", background: "radial-gradient(circle, " + st.color + "11, transparent)", pointerEvents: "none" }} />
-                  <div style={{ fontSize: 10, color: C.textD, fontFamily: "'JetBrains Mono',monospace", marginBottom: 6 }}>{st.label}</div>
-                  <div style={{ fontSize: 30, fontWeight: 700, color: st.color, fontFamily: "'JetBrains Mono',monospace" }}>{st.val}</div>
+                  <div style={{ fontSize: 11, color: C.textM, fontWeight: 500, letterSpacing: "0.03em", marginBottom: 6 }}>{st.label}</div>
+                  <div style={{ fontSize: 28, fontWeight: 700, color: st.color }}>{st.val}</div>
                 </div>;
               })}
             </div>
@@ -797,16 +797,16 @@ export default function App() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20 }}>
               <div style={Object.assign({}, glassCard, { borderLeft: "3px solid " + C.accent })}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                  <div style={{ fontSize: 10, color: C.accent, fontFamily: "'JetBrains Mono',monospace" }}>{"// daily_quote"}</div>
-                  <button onClick={fetchQuote} disabled={quoteLoading} style={{ background: "none", border: "none", color: C.accent, fontSize: 11, cursor: "pointer", fontFamily: "'JetBrains Mono',monospace" }}>{quoteLoading ? "loading..." : "refresh()"}</button>
+                  <div style={{ fontSize: 10, color: C.accent, fontWeight: 600, letterSpacing: "0.04em" }}>{"Daily Quote"}</div>
+                  <button onClick={fetchQuote} disabled={quoteLoading} style={{ background: "none", border: "none", color: C.accent, fontSize: 11, cursor: "pointer", fontWeight: 500 }}>{quoteLoading ? "Loading..." : "Refresh"}</button>
                 </div>
                 <div style={{ fontSize: 13, lineHeight: 1.6, fontStyle: "italic", color: C.text }}>{'"' + quote.text + '"'}</div>
                 <div style={{ fontSize: 11, color: C.textM, marginTop: 6 }}>{"— " + quote.author}</div>
               </div>
               <div style={Object.assign({}, glassCard, { borderLeft: "3px solid " + C.neon })}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                  <div style={{ fontSize: 10, color: C.neon, fontFamily: "'JetBrains Mono',monospace" }}>{"// tech_fact"}</div>
-                  <button onClick={refreshFact} style={{ background: "none", border: "none", color: C.neon, fontSize: 11, cursor: "pointer", fontFamily: "'JetBrains Mono',monospace" }}>{"shuffle()"}</button>
+                  <div style={{ fontSize: 10, color: C.neon, fontWeight: 600, letterSpacing: "0.04em" }}>{"Tech Insight"}</div>
+                  <button onClick={refreshFact} style={{ background: "none", border: "none", color: C.neon, fontSize: 11, cursor: "pointer", fontWeight: 500 }}>{"Shuffle"}</button>
                 </div>
                 <div style={{ fontSize: 13, lineHeight: 1.6, color: C.text }}>{fact}</div>
               </div>
@@ -815,14 +815,12 @@ export default function App() {
             {/* Quick actions */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 24 }}>
               <button onClick={reset} style={Object.assign({}, glassCard, { cursor: "pointer", textAlign: "left", border: "1px solid rgba(0,255,157,0.15)", transition: "all 0.2s" })}>
-                <div style={{ fontSize: 10, color: C.accent, fontFamily: "'JetBrains Mono',monospace", marginBottom: 6 }}>{"$ resumefit --generate"}</div>
                 <div style={{ fontSize: 15, fontWeight: 600 }}>Tailor new resume</div>
                 <div style={{ fontSize: 12, color: C.textD, marginTop: 4 }}>Paste a posting, get an ATS-optimized resume + cover letter</div>
               </button>
               <div style={Object.assign({}, glassCard, { textAlign: "left", border: "1px solid rgba(0,255,157,0.1)" })}>
-                <div style={{ fontSize: 10, color: C.neon, fontFamily: "'JetBrains Mono',monospace", marginBottom: 6 }}>{"$ resumefit --progress"}</div>
                 <div style={{ fontSize: 15, fontWeight: 600 }}>Graduation countdown</div>
-                <div style={{ fontSize: 28, fontWeight: 700, color: C.neon, fontFamily: "'JetBrains Mono',monospace", marginTop: 4 }}>{daysToGrad}<span style={{ fontSize: 14, color: C.textD }}>{" days"}</span></div>
+                <div style={{ fontSize: 28, fontWeight: 700, color: C.neon, marginTop: 4 }}>{daysToGrad}<span style={{ fontSize: 14, color: C.textD }}>{" days"}</span></div>
               </div>
             </div>
 
@@ -830,10 +828,9 @@ export default function App() {
             <div style={Object.assign({}, glassCard, { marginBottom: 24 })}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
                 <div>
-                  <div style={{ fontSize: 10, color: C.purple, fontFamily: "'JetBrains Mono',monospace", marginBottom: 2 }}>{"// certification_tracker"}</div>
                   <div style={{ fontSize: 16, fontWeight: 600 }}>Certification Sprint</div>
                 </div>
-                <div style={{ fontSize: 12, color: C.neon, fontFamily: "'JetBrains Mono',monospace" }}>{completedCerts + "/" + CERTS.length + " complete"}</div>
+                <div style={{ fontSize: 12, color: C.neon, fontWeight: 600 }}>{completedCerts + "/" + CERTS.length + " complete"}</div>
               </div>
               {/* Progress bar */}
               <div style={{ width: "100%", height: 6, background: C.border, borderRadius: 3, marginBottom: 16, overflow: "hidden" }}>
@@ -847,11 +844,11 @@ export default function App() {
                   <div style={{ flex: 1 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <a href={cert.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, fontWeight: 600, color: isDone ? C.textD : C.text, textDecoration: isDone ? "line-through" : "none", cursor: "pointer" }}>{cert.name}</a>
-                      <span style={{ fontSize: 9, padding: "1px 7px", borderRadius: 4, background: statusColor + "15", color: statusColor, fontFamily: "'JetBrains Mono',monospace" }}>{isDone ? "DONE" : cert.status === "in_progress" ? "IN PROGRESS" : cert.status === "future" ? "POST-GRAD" : "WEEK " + cert.week}</span>
+                      <span style={{ fontSize: 9, padding: "1px 7px", borderRadius: 4, background: statusColor + "15", color: statusColor, fontWeight: 500 }}>{isDone ? "DONE" : cert.status === "in_progress" ? "IN PROGRESS" : cert.status === "future" ? "POST-GRAD" : "WEEK " + cert.week}</span>
                     </div>
                     <div style={{ fontSize: 11, color: C.textD, marginTop: 2 }}>{cert.issuer + " • " + cert.cost + " • " + cert.time}</div>
                   </div>
-                  <a href={cert.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: C.accent, fontFamily: "'JetBrains Mono',monospace", textDecoration: "none", flexShrink: 0 }}>{"enroll >"}</a>
+                  <a href={cert.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: C.accent, fontWeight: 600, textDecoration: "none", flexShrink: 0 }}>{"Enroll →"}</a>
                 </div>;
               })}
             </div>
