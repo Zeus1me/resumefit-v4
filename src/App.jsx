@@ -749,7 +749,15 @@ export default function App() {
       <div style={{ borderBottom: "1px solid " + C.border, padding: "12px 20px", background: "rgba(12,14,22,0.9)", position: "sticky", top: 0, zIndex: 50 }}>
         <div style={{ maxWidth: 960, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }} onClick={goHome}>
-            <div style={{ width: 34, height: 34, borderRadius: 8, background: "linear-gradient(135deg, " + C.accent + ", #00cc7a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 700, color: "#fff", boxShadow: "0 0 15px rgba(0,255,157,0.2)" }}>Rf</div>
+            <svg width="34" height="34" viewBox="0 0 34 34" style={{ flexShrink: 0 }}>
+              <circle cx="17" cy="17" r="13" fill="none" stroke="#00ff9d" strokeWidth="1.3" opacity="0.22"/>
+              <circle cx="17" cy="17" r="8" fill="none" stroke="#00ff9d" strokeWidth="1.3" opacity="0.48"/>
+              <circle cx="17" cy="17" r="3.5" fill="#00ff9d"/>
+              <line x1="17" y1="1" x2="17" y2="8" stroke="#00ff9d" strokeWidth="0.8" opacity="0.3"/>
+              <line x1="17" y1="26" x2="17" y2="33" stroke="#00ff9d" strokeWidth="0.8" opacity="0.3"/>
+              <line x1="1" y1="17" x2="8" y2="17" stroke="#00ff9d" strokeWidth="0.8" opacity="0.3"/>
+              <line x1="26" y1="17" x2="33" y2="17" stroke="#00ff9d" strokeWidth="0.8" opacity="0.3"/>
+            </svg>
             <div>
               <div style={{ fontSize: 15, fontWeight: 700, letterSpacing: "-0.02em" }}>ResumeFit</div>
               <div style={{ fontSize: 9, color: C.accent, letterSpacing: "0.08em" }}>{"AI CAREER PLATFORM"}</div>
