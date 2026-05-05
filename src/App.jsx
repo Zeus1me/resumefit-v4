@@ -528,6 +528,48 @@ export default function App() {
   var _chatInput = s(""), chatInput = _chatInput[0], setChatInput = _chatInput[1];
   var _chatLoading = s(false), chatLoading = _chatLoading[0], setChatLoading = _chatLoading[1];
 
+  // ===== HISTORY STATE =====
+  var _history = s(function() { try { var d = localStorage.getItem("rf_history"); return d ? JSON.parse(d) : []; } catch(e) { return []; } }), history = _history[0], setHistory = _history[1];
+  var _showHistory = s(false), showHistory = _showHistory[0], setShowHistory = _showHistory[1];
+
+  function saveToHistory(resumeData, coverData, postingText, companyRes) {
+    var entry = {
+      id: Date.now(),
+      date: new Date().toISOString(),
+      title: resumeData.target_title || "Unknown Role",
+      company: (coverData && coverData.company_name) || resumeData.filename_suffix || "Unknown",
+      score: resumeData.match_score || 0,
+      resume: resumeData,
+      cover: coverData,
+      posting: postingText.slice(0, 2000),
+      companyInfo: companyRes || ""
+    };
+    var newHist = [entry].concat(history.slice(0, 29));
+    setHistory(newHist);
+    try { localStorage.setItem("rf_history", JSON.stringify(newHist)); } catch(e) {}
+  }
+
+  function loadFromHistory(entry) {
+    setRes(entry.resume);
+    setCov(entry.cover || null);
+    setPosting(entry.posting || "");
+    setStatus("done");
+    setView("results");
+    setTab("resume");
+    setShowHistory(false);
+  }
+
+  function deleteHistoryEntry(id) {
+    var newHist = history.filter(function(h) { return h.id !== id; });
+    setHistory(newHist);
+    try { localStorage.setItem("rf_history", JSON.stringify(newHist)); } catch(e) {}
+  }
+
+  function clearHistory() {
+    setHistory([]);
+    try { localStorage.removeItem("rf_history"); } catch(e) {}
+  }
+
   // ===== DASHBOARD STATE =====
 
   function reset() {
@@ -579,6 +621,7 @@ export default function App() {
         setCov(cp);
       }
       setStatus("done"); setProg(""); setView("results");
+      saveToHistory(p, cp, postText, companyInfo);
 
     } catch(e) { setErr(e.message); setStatus("idle"); setProg(""); }
   }
@@ -621,10 +664,18 @@ export default function App() {
     try {
       var qs = questions.filter(function(q) { return q.q.trim(); }).map(function(q) { return q.q; });
       if (qs.length === 0) throw new Error("Add at least one question.");
-      var qSys = "Answer job application questions for candidate " + MD.name + ". Use their experience and the posting. 2-5 sentences per answer unless simple. JSON: {\"answers\":[\"str\"]}";
-      var raw = await apiCall(qSys, "Posting:\n" + posting.slice(0, 3000) + "\n\nQuestions:\n" + qs.map(function(q, i) { return (i + 1) + ". " + q; }).join("\n"), 1200);
+      var qSys = "You are answering job application screening questions for candidate " + MD.name + ". Use their experience data and the job posting to craft authentic, specific answers. 2-5 sentences per answer. Be conversational but professional. Use first person (I, my). Include specific metrics and examples from the candidate's background where relevant.\n\nCandidate background: " + MD.name + ", 6+ years data analytics, Python/SQL/R, Power BI/Tableau, MS Data Analytics at Northeastern University Vancouver. Key achievements: 12% risk reduction via churn models, 8+ automated dashboards, 500K+ record ETL pipelines, $30K cost savings identified.\n\nRESPOND WITH ONLY valid JSON, no markdown, no explanation:\n{\"answers\":[\"answer1\",\"answer2\"]}";
+      var raw = await apiCall(qSys, "Posting:\n" + posting.slice(0, 3000) + "\n\nQuestions:\n" + qs.map(function(q, i) { return (i + 1) + ". " + q; }).join("\n"), 1200, false);
       var d;
-      try { d = JSON.parse(raw); } catch(e2) { throw new Error("Q&A parse failed."); }
+      try {
+        var jsonStart = raw.indexOf("{");
+        var jsonEnd = raw.lastIndexOf("}") + 1;
+        if (jsonStart >= 0 && jsonEnd > jsonStart) {
+          d = JSON.parse(raw.slice(jsonStart, jsonEnd));
+        } else {
+          throw new Error("No JSON found");
+        }
+      } catch(e2) { throw new Error("Q&A parse failed. Try again."); }
       var newQ = questions.map(function(q, i) { return { q: q.q, a: d.answers && d.answers[i] ? d.answers[i] : "" }; });
       setQuestions(newQ); setQaGenerated(true);
     } catch(e) { setErr(e.message); }
@@ -828,10 +879,37 @@ export default function App() {
           <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
             <div style={{ fontSize: 11, color: C.textD, marginRight: 8 }}>{clock.toLocaleTimeString("en-CA", { hour12: false })}</div>
             <button onClick={goHome} style={neonBtn(view === "home" ? C.accent : C.textD, false)}>{"Dashboard"}</button>
+            <button onClick={function() { setShowHistory(!showHistory); }} style={neonBtn(showHistory ? C.amber : C.textD, false)}>{"History" + (history.length > 0 ? " (" + history.length + ")" : "")}</button>
             <button onClick={reset} style={{ padding: "8px 18px", borderRadius: 8, border: "none", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", background: "linear-gradient(135deg, " + C.accent + ", #00cc7a)", color: "#fff", boxShadow: C.glow }}>{"+ New Resume"}</button>
           </div>
         </div>
       </div>
+
+      {/* HISTORY PANEL */}
+      {showHistory && (
+        <div style={{ maxWidth: 960, margin: "0 auto", padding: "16px 20px", position: "relative", zIndex: 2 }}>
+          <div style={{ background: C.surfaceG, border: "1px solid " + C.borderG, borderRadius: 14, padding: "18px 20px", maxHeight: 400, overflowY: "auto" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+              <div style={{ fontSize: 16, fontWeight: 600 }}>Resume History</div>
+              {history.length > 0 && <button onClick={clearHistory} style={{ fontSize: 11, color: C.error, background: "none", border: "none", cursor: "pointer", fontFamily: "inherit" }}>Clear all</button>}
+            </div>
+            {history.length === 0 && <div style={{ fontSize: 13, color: C.textD, textAlign: "center", padding: "20px 0" }}>No resumes generated yet. Your history will appear here.</div>}
+            {history.map(function(entry) {
+              return <div key={entry.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0", borderBottom: "1px solid " + C.border, cursor: "pointer" }} onClick={function() { loadFromHistory(entry); }}>
+                <div style={{ width: 40, height: 40, borderRadius: 10, background: entry.score >= 80 ? C.neonG : entry.score >= 60 ? C.amberG : C.errorG, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 700, color: entry.score >= 80 ? C.neon : entry.score >= 60 ? C.amber : C.error, flexShrink: 0 }}>{entry.score > 0 ? entry.score + "%" : "--"}</div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{entry.title}</div>
+                  <div style={{ fontSize: 11, color: C.textD }}>{entry.company + " — " + new Date(entry.date).toLocaleDateString("en-CA", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}</div>
+                </div>
+                <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
+                  {entry.cover && <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 4, background: C.neonG, color: C.neon }}>CL</span>}
+                  <button onClick={function(e) { e.stopPropagation(); deleteHistoryEntry(entry.id); }} style={{ fontSize: 11, color: C.textD, background: "none", border: "none", cursor: "pointer", fontFamily: "inherit" }}>x</button>
+                </div>
+              </div>;
+            })}
+          </div>
+        </div>
+      )}
 
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "28px 20px", position: "relative", zIndex: 1 }}>
 
