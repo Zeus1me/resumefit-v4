@@ -715,11 +715,21 @@ export default function App() {
     try {
       var resumeText = rRef.current ? rRef.current.innerText : "Resume not available";
       var coverText = cRef.current ? "\n\nCover Letter:\n" + cRef.current.innerText : "";
-      var chatSys = "You are a career advisor. Evaluate the resume against the job posting. Score out of 10. Be specific.";
-      var fullMsg = "RESUME:\n" + resumeText + coverText + "\n\nJOB POSTING:\n" + posting.slice(0, 4000) + "\n\nQuestion: " + msg;
+      var qaText = "";
+      if (questions && questions.length > 0) {
+        var answered = questions.filter(function(q) { return q.q.trim() && q.a.trim(); });
+        if (answered.length > 0) {
+          qaText = "\n\nAPPLICATION QUESTIONS & ANSWERS:\n";
+          for (var qi = 0; qi < answered.length; qi++) {
+            qaText += "Q" + (qi + 1) + ": " + answered[qi].q + "\nA" + (qi + 1) + ": " + answered[qi].a + "\n\n";
+          }
+        }
+      }
+      var chatSys = "You are a senior career advisor and interview coach. You have full access to the candidate's resume, cover letter, application question answers, and the job posting. When asked to evaluate or improve application answers, provide specific rewrites with better structure, stronger examples, and tighter alignment to the posting. When evaluating the resume, score out of 10 and be specific about gaps and strengths.";
+      var fullMsg = "RESUME:\n" + resumeText + coverText + qaText + "\n\nJOB POSTING:\n" + posting.slice(0, 4000) + "\n\nUser request: " + msg;
       var r = await fetch("/api/tailor", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1200, system: chatSys, messages: [{ role: "user", content: fullMsg }] })
+        body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1500, system: chatSys, messages: [{ role: "user", content: fullMsg }] })
       });
       var d = await r.json();
       if (d.error) throw new Error(d.error.message || "API error");
