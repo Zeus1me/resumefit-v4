@@ -666,20 +666,42 @@ export default function App() {
     try {
       var qs = questions.filter(function(q) { return q.q.trim(); }).map(function(q) { return q.q; });
       if (qs.length === 0) throw new Error("Add at least one question.");
-      var qSys = "You are answering job application screening questions for candidate " + MD.name + ". Use their experience data and the job posting to craft authentic, specific answers. 2-5 sentences per answer. Be conversational but professional. Use first person (I, my). Include specific metrics and examples from the candidate's background where relevant.\n\nCandidate background: " + MD.name + ", 6+ years data analytics, Python/SQL/R, Power BI/Tableau, MS Data Analytics at Northeastern University Vancouver. Key achievements: 12% risk reduction via churn models, 8+ automated dashboards, 500K+ record ETL pipelines, $30K cost savings identified.\n\nRESPOND WITH ONLY valid JSON, no markdown, no explanation:\n{\"answers\":[\"answer1\",\"answer2\"]}";
+      var qSys = "You answer job application screening questions for " + MD.name + ". Use first person. Be specific with metrics. 2-5 sentences each. Candidate: 6+ years data analytics, Python/SQL/R, Power BI/Tableau, MS Data Analytics Northeastern. Achievements: 12% risk reduction, 8+ dashboards, 500K+ ETL pipelines, $30K savings. RESPOND ONLY with a JSON array of answer strings. No keys, no object wrapper, no markdown. Example: [\"Answer 1 here\",\"Answer 2 here\"]";
       var raw = await apiCall(qSys, "Posting:\n" + posting.slice(0, 3000) + "\n\nQuestions:\n" + qs.map(function(q, i) { return (i + 1) + ". " + q; }).join("\n"), 1200, false);
       var d;
       try {
-        var jsonStart = raw.indexOf("{");
-        var jsonEnd = raw.lastIndexOf("}") + 1;
-        if (jsonStart >= 0 && jsonEnd > jsonStart) {
-          d = JSON.parse(raw.slice(jsonStart, jsonEnd));
+        // Clean the response
+        var cleaned = raw.replace(/[\r\n]+/g, " ").replace(/\t/g, " ");
+        // Try to find array first
+        var arrStart = cleaned.indexOf("[");
+        var arrEnd = cleaned.lastIndexOf("]") + 1;
+        if (arrStart >= 0 && arrEnd > arrStart) {
+          var answers = JSON.parse(cleaned.slice(arrStart, arrEnd));
+          d = { answers: answers };
         } else {
-          throw new Error("No JSON found");
+          // Try object format
+          var objStart = cleaned.indexOf("{");
+          var objEnd = cleaned.lastIndexOf("}") + 1;
+          if (objStart >= 0 && objEnd > objStart) {
+            d = JSON.parse(cleaned.slice(objStart, objEnd));
+          } else {
+            throw new Error("No JSON found");
+          }
         }
-      } catch(e2) { throw new Error("Q&A parse failed. Try again."); }
+      } catch(e2) {
+        // Last resort: split by numbered patterns
+        try {
+          var parts = raw.split(/\d+[\.\)]\s*/);
+          parts = parts.filter(function(p) { return p.trim().length > 20; });
+          if (parts.length > 0) {
+            d = { answers: parts.map(function(p) { return p.trim().replace(/^["']|["']$/g, ""); }) };
+          } else {
+            throw new Error("Q&A parse failed. Try again.");
+          }
+        } catch(e3) { throw new Error("Q&A parse failed. Try again."); }
+      }
       var newQ = questions.map(function(q, i) { return { q: q.q, a: d.answers && d.answers[i] ? d.answers[i] : "" }; });
-      setQuestions(newQ); setQaGenerated(true);
+      setQuestions(newQ); setQaGenerated(true); setTab("qa");
     } catch(e) { setErr(e.message); }
     setQaLoading(false);
   }
