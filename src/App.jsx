@@ -312,23 +312,8 @@ FINAL ENFORCEMENT (you MUST follow these — violations will be caught):
 
 1. key_highlights: Write 3 COMPLETELY NEW sentences that do NOT appear anywhere in experience bullets. Use DIFFERENT numbers, DIFFERENT phrasing, DIFFERENT angles. One about technical depth, one about business impact, one about scale or collaboration. Test: if you can find the same sentence in the experience section, rewrite it.
 
-2. projects: BEFORE selecting projects, identify the posting's primary domain (e.g., healthcare, finance, ML, engineering, consulting, marketing, etc.). Then scan ALL 16 projects and pick the 3 whose SUBJECT MATTER best matches that domain. Available project IDs and their domains:
-   - lidar: engineering, autonomous systems, sensor data, 3D processing
-   - jobforge: software development, React, AI applications
-   - resumefit: web app deployment, serverless, full-stack
-   - fruitnet: computer vision, object detection, Docker, API deployment
-   - intelcv: transfer learning, image classification, deep learning
-   - textclass: NLP, text classification, language models
-   - bikesharing: ML pipeline, multiple algorithms, forecasting
-   - heartdisease: healthcare, medical prediction, clinical data
-   - creditrisk: financial modeling, risk analysis, churn, SHAP interpretability
-   - nashville: regression, housing/real estate, gradient boosting
-   - streamlit: dashboard, movie reviews, time-series, 500K rows
-   - steeves: consulting, resource allocation, R/ggplot2
-   - bicycleaccidents: large-scale EDA, 847K records, geospatial, safety/injury
-   - awsglue: cloud data engineering, PySpark, ETL, big data
-   - cymax: demand forecasting, eCommerce, logistics
-   - nigeriaelection: data visualization, Chart.js, political/public data
+2. projects: Select 3 projects. FIRST identify the posting company's INDUSTRY (banking, healthcare, crypto, tech, consulting, etc.). THEN pick projects whose INDUSTRY matches, even if other projects match the tools better. A credit union posting should get finance/risk projects, not just dashboard projects. A healthcare posting should get medical/health projects. Only fall back to tool-matching if no industry match exists. Project domain reference:
+   lidar=engineering/autonomous, jobforge=software/React, resumefit=web-app/deployment, fruitnet=CV/detection/Docker, intelcv=deep-learning/classification, textclass=NLP/text, bikesharing=ML-pipeline/forecasting, heartdisease=healthcare/medical/clinical, creditrisk=finance/risk/churn/banking, nashville=regression/housing/financial, streamlit=dashboard/reviews/500K, steeves=consulting/resource-allocation, bicycleaccidents=EDA/geospatial/847K, awsglue=cloud/ETL/PySpark, cymax=ecommerce/demand-forecasting/logistics, nigeriaelection=visualization/Chart.js
 
 3. certifications: Include ai_practice for ALL tech/data roles. ALSO include fin_accounting if the posting involves ANY of: financial data, patient data, billing, transactions, operational metrics, cost analysis, budgets, or business performance tracking.
 
