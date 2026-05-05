@@ -83,7 +83,8 @@ var MD = {
     viz: "Tableau, Power BI, Matplotlib, Seaborn, Plotly, Streamlit, ggplot2, Chart.js, gt tables",
     tools: "Git, Docker, AWS (S3, Glue, EC2), Google Cloud Vision API, ROS2, Jupyter, PyCharm, RStudio, Excel (Advanced), Hugging Face, FastAPI, Quarto",
     db: "SQL Server, Snowflake, MS Access, MongoDB concepts, Parquet, DynamoDB concepts",
-    methods: "Regression, Classification, Clustering, NLP, Time-Series Forecasting, A/B Testing, Deep Learning, Computer Vision, Object Detection, Transfer Learning, Dimensionality Reduction, Reinforcement Learning, Optimization, Text Mining, Web Scraping, RLHF, ETL Pipelines"
+    methods: "Regression, Classification, Clustering, NLP, Time-Series Forecasting, A/B Testing, Deep Learning, Computer Vision, Object Detection, Transfer Learning, Dimensionality Reduction, Reinforcement Learning, Optimization, Text Mining, Web Scraping, RLHF, ETL Pipelines",
+    professional: "Data Storytelling, Cross-Functional Collaboration, Stakeholder Communication, Technical Presentations, Agile/Scrum, Requirements Gathering, Business Acumen, Problem-Solving"
   }
 };
 
@@ -121,10 +122,12 @@ PROFESSIONAL SUMMARY RULES:
 - Mirror 3-5 keywords from the posting naturally
 
 SKILLS SECTION RULES:
-- Group into exactly 4 lines with labels that match the posting's language
+- Group into 4-5 lines with labels that match the posting's language
 - Lead each line with the skills mentioned in the posting (order matters, recruiters scan left to right)
 - Include the EXACT tool names (not generic categories): "Python" not "programming", "Tableau" not "visualization tools"
 - Include specific libraries: pandas, NumPy, scikit-learn, PyTorch (not just "Python libraries")
+- If the posting mentions soft skills like "cross-functional collaboration", "stakeholder management", or "data storytelling", include a "Professional Skills" line using the candidate's professional skills data
+- In 2026, recruiters explicitly look for: data storytelling, stakeholder management, cross-functional collaboration, and communication. Weave these into bullets AND skills when the posting values them
 
 PROJECT RULES:
 - Each project bullet must follow the same action verb + tool + metric formula
@@ -175,6 +178,13 @@ CANADIAN MARKET SPECIFICS:
 - Include city only (Vancouver, BC), not full address
 - LinkedIn URL is expected (92% of Canadian recruiters check)
 - PGWP eligibility can be mentioned if posting asks about work authorization
+
+2026 AI-RESUME DIFFERENTIATION (CRITICAL):
+- 67% of HR leaders say AI-generated resumes slow hiring. 65% say they make it harder to assess skills.
+- To stand out: NAME specific systems touched (apps, platforms, environments), not generic descriptions
+- Show PROOF over PHRASING: specific database names (PostgreSQL, MongoDB), specific SQL features (CTEs, window functions, joins across 500K+ rows), specific deployment targets (Docker, Hugging Face Spaces, Streamlit Cloud)
+- Signal collaboration: mention who you worked with (cross-functional teams, senior leadership, NOC teams, marketing teams) — not just what you did alone
+- Data analysts who include a GitHub/portfolio link advance to interview at 2x the rate (Hired.com 2024 survey)
 
 ${pr}
 
@@ -263,10 +273,11 @@ OVERVIEW RULES (mandatory — this is CRITICAL):
 - MUST be written in FIRST PERSON PERSPECTIVE about Joseph. It is HIS summary, selling HIM.
 - MUST start with: "[Exact Job Title from posting] with 6+ years of experience in [2-3 matching skill areas]."
 - SECOND sentence: strongest quantified achievement that matches the posting (e.g., "Built predictive models reducing client risk by 12% and automated dashboards eliminating 10+ hours/week of manual reporting.")
-- THIRD sentence: education + what sets him apart (e.g., "Currently completing MS in Data Analytics (GPA 3.8) at Northeastern University with hands-on experience across [1-2 posting-relevant domains].")
-- NEVER exceed 3 sentences. NEVER describe job requirements. ONLY describe the candidate.
+- THIRD sentence: what sets him apart — unique combination of skills, domain expertise, or capstone/deployment experience relevant to the posting (e.g., "Combines deep machine learning expertise with hands-on deployment experience including Docker, FastAPI, and Hugging Face Spaces.")
+- You MAY mention GPA (3.8) if relevant, but NEVER say "Currently completing" or "Currently pursuing" — instead say "MS Data Analytics candidate" or just reference skills/expertise.
 - BAD example: "This role requires deep quantitative analysis and financial domain expertise." 
-- GOOD example: "Data Analyst with 6+ years of experience in Python, SQL, and financial analytics. Engineered predictive models reducing client risk exposure by 12% and built 10+ automated Power BI dashboards for revenue forecasting. Currently completing MS in Data Analytics (GPA 3.8) at Northeastern University with expertise in machine learning and business intelligence."
+- BAD example: "Currently completing MS in Data Analytics (GPA 3.8) at Northeastern University."
+- GOOD example: "Data Analyst with 6+ years of experience in Python, SQL, and financial analytics. Engineered predictive models reducing client risk exposure by 12% and built 10+ automated Power BI dashboards for revenue forecasting. Combines hands-on machine learning deployment experience with deep expertise in business intelligence and stakeholder communication."
 
 COURSEWORK SELECTION:
 - Select 6-8 most relevant courses from the candidate's coursework array that match the posting
@@ -300,7 +311,7 @@ CANDIDATE:
 - Name: ${MD.name} | ${MD.location} | ${MD.email} | ${MD.phone}
 - LinkedIn: ${MD.linkedin} | GitHub: ${MD.github}
 - Authorized to work in Canada (PGWP eligible)
-- MS Data Analytics, Northeastern University Vancouver (GPA 3.8/4.0, graduating Jun 2026)
+- MS Data Analytics, Northeastern University Vancouver (graduating Jun 2026)
 - B.Eng Electrical & Electronic Engineering, Obafemi Awolowo University Nigeria
 - 6+ years analytics: Full-time Data Analyst at Jonathan Kings Limited (logistics/retail/international business, 2021-2023: dashboards, Python analysis of 50K+ transactions, financial reporting, supply chain KPIs, $30K savings identified), freelance data analyst since 2019 (churn models -12% risk, Power BI/Tableau dashboards -25% manual effort, SQL pipelines 500K+ records, R time-series forecasting +18%), Huawei intern (diagnostics -15% failures)
 - Key projects: LiDAR point cloud with Lumotive (ROS2), Faster R-CNN FruitNet (4485 imgs, 11 classes, Docker+HuggingFace), bike sharing ML (R2>0.91, K-Means, PCA, Q-Learning), credit risk SHAP, ULMFiT text classification, Intel ResNet-18 transfer learning (F1=0.935), Nashville housing gradient boosting (R2=0.9481), JobForge React app, ResumeFit Netlify app, Amazon review Streamlit dashboard (500K rows), Steeves & Associates resource allocation (R/ggplot2), Nigerian election Chart.js dashboard, bicycle accidents Plotly dashboard (847K records), AWS Glue PySpark ETL, Cymax demand forecasting, workforce scheduling optimization
@@ -322,6 +333,8 @@ Confident, forward-looking. Reference a specific aspect of the role you're eager
 
 RULES:
 - 250-350 words TOTAL (70% of HMs prefer this range)
+- NEVER say "Currently completing" or "Currently pursuing" a degree. Instead reference skills, expertise, or say "MS Data Analytics candidate" if education must be mentioned.
+- Do NOT include "GPA 3.8" in the cover letter body — GPA belongs on the resume only.
 - Every sentence answers "Why should we hire this person?"
 - Mirror 3-5 keywords from the posting naturally
 - Tone: Confident, specific, human. Like a sharp colleague wrote it, not a template
@@ -995,6 +1008,7 @@ export default function App() {
                 <div style={{ fontSize: 12, marginBottom: 14 }}>{cov.salutation}</div>
                 <div style={{ fontSize: 12, whiteSpace: "pre-wrap", lineHeight: 1.7 }}>{cov.body}</div>
                 <div style={{ fontSize: 12, marginTop: 14 }}>{cov.closing}</div>
+                <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6 }}>{MD.name}</div>
               </div>
             )}
 
