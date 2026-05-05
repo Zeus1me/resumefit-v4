@@ -91,8 +91,8 @@ var MD = {
 // ===== SYSTEM PROMPT =====
 function makeResumeSys(pages) {
   const pr = pages === 1
-    ? "CRITICAL ONE-PAGE MODE: Select ONLY 3 bullets per experience role (freelance, jkl, huawei). Select ONLY 3 projects. Keep overview to exactly 3 sentences. Every word must earn its place. If in doubt, cut it."
-    : "TWO PAGES: Include 4-5 bullets per role, 5-6 projects, expanded 3-4 sentence overview. Still be selective.";
+    ? "CRITICAL ONE-PAGE MODE: Select EXACTLY 3 bullet IDs per experience role (freelance_bullets: 3, jkl_bullets: 3, huawei_bullets: 1). Select EXACTLY 3 project IDs. If you return more than 3 bullet IDs for any role or more than 3 project IDs, the resume will overflow the page. Keep overview to exactly 3 sentences. DO NOT include airtel unless explicitly relevant (it adds a 4th role which risks overflow)."
+    : "TWO PAGES: Include 4-5 bullets per role, 5-6 projects, expanded 3-4 sentence overview. May include airtel and writer roles. Still be selective.";
 
   return `You are an elite ATS-optimized resume tailoring engine for the Canadian tech job market (2026). Your output must pass Workday, Taleo, Lever, and Greenhouse ATS parsers AND impress a human recruiter in their 6-second scan.
 
@@ -145,6 +145,9 @@ PROJECT RULES:
 
 METRIC ACCURACY (CRITICAL — NEVER VIOLATE):
 - NEVER invent, inflate, or exaggerate metrics. Only use numbers that appear in the candidate data.
+- NEVER COMBINE separate metrics to create larger numbers. 8 dashboards (freelance) + 10 dashboards (JKL) does NOT equal "18+ dashboards". Report them separately in their respective experience sections.
+- NEVER fabricate time savings not in the data. "10 hours/week" is verified. "35 hours weekly" is NOT.
+- In key_highlights, you may reframe verified metrics but NEVER inflate them. "10+ hours/week saved" can become "500+ hours annually saved" (math checks out). But "25% effort reduction" cannot become "35% effort reduction".
 - These are the ONLY accurate metrics you may use:
   * 12% risk reduction (churn models)
   * 8+ dashboards (Power BI/Tableau)
@@ -488,11 +491,15 @@ export default function App() {
     return null;
   }
 
-  async function apiCall(system, msg, maxTok) {
+  async function apiCall(system, msg, maxTok, useSearch) {
+    var body = { model: "claude-sonnet-4-20250514", max_tokens: maxTok || 1500, system: system, messages: [{ role: "user", content: msg }] };
+    if (useSearch) {
+      body.tools = [{ type: "web_search_20250305", name: "web_search" }];
+    }
     var r = await fetch("/api/tailor", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: maxTok || 1500, system: system, messages: [{ role: "user", content: msg }] })
+      body: JSON.stringify(body)
     });
     var d = await r.json();
     if (d.error) throw new Error(d.error.message || JSON.stringify(d.error));
@@ -503,6 +510,12 @@ export default function App() {
       }
     }
     return text.replace(/```json/g, "").replace(/```/g, "").trim();
+  }
+
+  async function researchCompany(postText) {
+    var sys = "You are a company research assistant. From the job posting below, identify the company name. Then search the web to find: 1) What industry/sector the company is in, 2) What products/services they offer, 3) Key technologies they use, 4) Their size and culture. Return a brief 3-5 sentence summary. If you cannot identify the company, return 'UNKNOWN'.";
+    var result = await apiCall(sys, "Job posting:\n" + postText.slice(0, 3000), 500, true);
+    return result;
   }
 
   // ===== Q&A STATE =====
@@ -539,16 +552,29 @@ export default function App() {
         setPosting(postText);
       }
       if (!postText || postText.length < 30) throw new Error("Please paste a job posting (at least 30 characters).");
+
+      // Step 1: Research the company
+      setProg("Researching company...");
+      var companyInfo = "";
+      try {
+        companyInfo = await researchCompany(postText);
+        if (companyInfo === "UNKNOWN" || companyInfo.length < 20) companyInfo = "";
+      } catch(e2) { companyInfo = ""; }
+
+      // Step 2: Tailor resume with company context
       setProg("Tailoring resume...");
       var extra = instr.trim() ? "\nADDITIONAL INSTRUCTIONS: " + instr.trim() : "";
-      var raw = await apiCall(makeResumeSys(pages), "Job posting:\n" + postText + extra, pages === 2 ? 2000 : 1500);
+      var companyContext = companyInfo ? "\n\nCOMPANY RESEARCH (use this to select industry-relevant projects, skills emphasis, and language):\n" + companyInfo : "";
+      var raw = await apiCall(makeResumeSys(pages), "Job posting:\n" + postText + companyContext + extra, pages === 2 ? 2500 : 1800);
       var p;
       try { p = JSON.parse(raw); } catch(e2) { throw new Error("Resume parse failed. Try again."); }
       setRes(p);
+
+      // Step 3: Cover letter with company context
       var cp = null;
       if (genType === "both") {
         setProg("Writing cover letter...");
-        var cRaw = await apiCall(COVER_SYS, "Job posting:\n" + postText + extra + "\n\nResume overview: " + p.overview + "\nTarget role: " + p.target_title, 1500);
+        var cRaw = await apiCall(COVER_SYS, "Job posting:\n" + postText + companyContext + extra + "\n\nResume overview: " + p.overview + "\nTarget role: " + p.target_title, 1500);
         try { cp = JSON.parse(cRaw); } catch(e3) { throw new Error("Cover letter parse failed."); }
         setCov(cp);
       }
