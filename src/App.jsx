@@ -308,15 +308,31 @@ MATCH SCORE:
 - Count how many required skills/qualifications from the posting are matched by the candidate
 - Return as match_score (0-100) and matched_keywords (array of matched terms)
 
-FINAL ENFORCEMENT (read these LAST before generating JSON):
+FINAL ENFORCEMENT (you MUST follow these — violations will be caught):
 
-1. key_highlights: Write 3 NEW sentences. Do NOT copy any bullet text from experience. Rewrite from scratch with different phrasing and different angles. Each highlight must cover a DIFFERENT strength (e.g., one technical, one business impact, one scale). If any highlight matches a bullet word-for-word, you have failed.
+1. key_highlights: Write 3 COMPLETELY NEW sentences that do NOT appear anywhere in experience bullets. Use DIFFERENT numbers, DIFFERENT phrasing, DIFFERENT angles. One about technical depth, one about business impact, one about scale or collaboration. Test: if you can find the same sentence in the experience section, rewrite it.
 
-2. projects: Read the posting's industry, domain, and technical requirements. Select projects whose SUBJECT MATTER and TOOLS align with what the posting values. Prefer projects that demonstrate skills the posting explicitly asks for. NEVER default to the same 3 projects regardless of posting. The candidate has 16 projects — use the variety.
+2. projects: BEFORE selecting projects, identify the posting's primary domain (e.g., healthcare, finance, ML, engineering, consulting, marketing, etc.). Then scan ALL 16 projects and pick the 3 whose SUBJECT MATTER best matches that domain. Available project IDs and their domains:
+   - lidar: engineering, autonomous systems, sensor data, 3D processing
+   - jobforge: software development, React, AI applications
+   - resumefit: web app deployment, serverless, full-stack
+   - fruitnet: computer vision, object detection, Docker, API deployment
+   - intelcv: transfer learning, image classification, deep learning
+   - textclass: NLP, text classification, language models
+   - bikesharing: ML pipeline, multiple algorithms, forecasting
+   - heartdisease: healthcare, medical prediction, clinical data
+   - creditrisk: financial modeling, risk analysis, churn, SHAP interpretability
+   - nashville: regression, housing/real estate, gradient boosting
+   - streamlit: dashboard, movie reviews, time-series, 500K rows
+   - steeves: consulting, resource allocation, R/ggplot2
+   - bicycleaccidents: large-scale EDA, 847K records, geospatial, safety/injury
+   - awsglue: cloud data engineering, PySpark, ETL, big data
+   - cymax: demand forecasting, eCommerce, logistics
+   - nigeriaelection: data visualization, Chart.js, political/public data
 
-3. certifications: If the posting involves financial data, transactions, billing, operations metrics, or business performance — include fin_accounting alongside ai_practice. If the posting is marketing/SEO — include semrush_seo. If writing/content — include linkedin_writing. Default: always include ai_practice for any data/tech role.
+3. certifications: Include ai_practice for ALL tech/data roles. ALSO include fin_accounting if the posting involves ANY of: financial data, patient data, billing, transactions, operational metrics, cost analysis, budgets, or business performance tracking.
 
-4. huawei_bullets: Choose based on what the posting values more — data quality/engineering/monitoring → use "diagnostics". Stakeholder communication/reporting/BI → use "reports". If both matter, include both.
+4. huawei_bullets: Use "diagnostics" if posting emphasizes data quality, monitoring, root-cause analysis, or engineering. Use "reports" if posting emphasizes stakeholder communication, reporting, or presentations.
 
 RESPOND WITH ONLY VALID JSON (no markdown, no explanation):
 {"overview":"string","target_title":"string","skills":[{"label":"string","items":"string"}],"coursework":["string"],"key_highlights":["string","string","string"],"match_score":number,"matched_keywords":["string"],"include_airtel":boolean,"include_writer":boolean,"certifications":["cert_id"],"freelance_bullets":["bullet_id"],"jkl_bullets":["bullet_id"],"huawei_bullets":["bullet_id"],"airtel_bullets":["bullet_id"],"writer_bullets":["bullet_id"],"projects":["project_id"],"filename_suffix":"string"}`;
