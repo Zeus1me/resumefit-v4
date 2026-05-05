@@ -133,6 +133,15 @@ PROJECT RULES:
 - Each project bullet must follow the same action verb + tool + metric formula
 - Frame academic projects as professional deliverables with business impact language
 - Include deployment/production indicators where relevant (Docker, Hugging Face, Streamlit Cloud, Netlify)
+- DOMAIN MATCHING (CRITICAL): Select projects that match the posting's INDUSTRY/DOMAIN:
+  * Healthcare/medical → heart disease prediction, bicycle accidents (injury data)
+  * Finance/crypto/blockchain → credit risk SHAP, Nashville housing (financial modeling)
+  * ML/AI engineering → FruitNet, Intel ResNet-18, text classification, LiDAR capstone
+  * Data engineering/pipelines → AWS Glue PySpark, LiDAR capstone (data processing)
+  * BI/analytics/dashboards → Streamlit dashboard, Steeves, bicycle accidents, Nigerian election
+  * Marketing/product → credit risk (churn), Cymax demand forecasting
+  * Consulting/general → Steeves, bike sharing, Nashville housing
+- NEVER select the same 3 projects every time. Match to the posting's domain first.
 
 METRIC ACCURACY (CRITICAL — NEVER VIOLATE):
 - NEVER invent, inflate, or exaggerate metrics. Only use numbers that appear in the candidate data.
@@ -191,9 +200,10 @@ ${pr}
 SELECTION RULES:
 - include_airtel: true ONLY if posting values telecom, engineering, monitoring, KPIs, or emphasizes Canadian work experience
 - include_writer: true ONLY if posting mentions technical writing, content creation, communication, documentation, or copywriting
-- certifications: select 1-3 most relevant from: ai_practice (AI/ML/data science roles), fin_accounting (finance/banking/analyst roles), semrush_seo (marketing/SEO/digital roles), linkedin_writing (writing/content roles). Always include ai_practice for any tech/data role.
+- certifications: select 1-3 most relevant from: ai_practice (AI/ML/data science roles), fin_accounting (finance/banking/analyst/healthcare/operations roles with financial data), semrush_seo (marketing/SEO/digital roles), linkedin_writing (writing/content roles). Always include ai_practice for any tech/data role. Include fin_accounting for ANY role involving financial data, billing, transactions, P&L, or operational metrics.
 - ALWAYS include freelance and jkl (Jonathan Kings Limited) — they are core experience
 - ALWAYS include huawei — it shows engineering background
+- For huawei: select the MOST relevant bullet: use "diagnostics" (data-driven diagnostic workflows, 15% failure reduction) for data quality / engineering / monitoring roles, use "reports" (technical reports for leadership) for stakeholder / communication / BI roles
 - For jkl: select 3-4 best bullets matching the posting from: jkl_dashboards, jkl_reporting, jkl_python, jkl_crm, jkl_supply, jkl_stakeholder
 - Rewrite bullet text to echo the posting's exact terminology and keywords while keeping metrics accurate
 - Order projects by relevance to the posting, not by date
@@ -286,6 +296,8 @@ COURSEWORK SELECTION:
 KEY HIGHLIGHTS:
 - Generate exactly 3 bullet-point highlights — the candidate's top quantified wins most relevant to the posting
 - Format: short, punchy, numbers-forward (e.g., "Reduced client risk 12% through ML prediction models")
+- CRITICAL: These must be UNIQUE summaries, NOT copy-pasted from experience bullets. Condense and reframe — combine multiple achievements or highlight a different angle. If a highlight reads identically to any experience bullet, rewrite it.
+- Each highlight should cover a DIFFERENT strength area (e.g., one technical, one business impact, one scale/volume)
 
 SKILLS PROFICIENCY:
 - For the top 3-5 most important skills, add proficiency level in parentheses: (Advanced), (Proficient), or (Intermediate)
