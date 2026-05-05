@@ -145,8 +145,8 @@ PROJECT RULES:
 
 METRIC ACCURACY (CRITICAL — NEVER VIOLATE):
 - NEVER invent, inflate, or exaggerate metrics. Only use numbers that appear in the candidate data.
-- NEVER COMBINE separate metrics to create larger numbers. 8 dashboards (freelance) + 10 dashboards (JKL) does NOT equal "18+ dashboards". Report them separately in their respective experience sections.
-- NEVER fabricate time savings not in the data. "10 hours/week" is verified. "35 hours weekly" is NOT.
+- NEVER COMBINE separate metrics to create larger numbers. 8 dashboards (freelance) + 10 dashboards (JKL) does NOT equal "18+ dashboards" — report them separately. 500K records (SQL) + 50K records (JKL) does NOT equal "550K records". This applies to key_highlights too — each highlight must use a single verified metric, not a sum of multiple metrics.
+- NEVER fabricate time savings not in the data. "10 hours/week" is verified. "35 hours weekly" is NOT. "500+ hours annually" is valid (10 hrs/week x 50 weeks = 500).
 - In key_highlights, you may reframe verified metrics but NEVER inflate them. "10+ hours/week saved" can become "500+ hours annually saved" (math checks out). But "25% effort reduction" cannot become "35% effort reduction".
 - These are the ONLY accurate metrics you may use:
   * 12% risk reduction (churn models)
