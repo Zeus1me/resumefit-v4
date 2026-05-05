@@ -299,10 +299,10 @@ COURSEWORK SELECTION:
 - Return as coursework array in JSON
 
 KEY HIGHLIGHTS:
-- Generate exactly 3 bullet-point highlights — the candidate's top quantified wins most relevant to the posting
-- Format: short, punchy, numbers-forward (e.g., "Reduced client risk 12% through ML prediction models")
-- CRITICAL: These must be UNIQUE summaries, NOT copy-pasted from experience bullets. Condense and reframe — combine multiple achievements or highlight a different angle. If a highlight reads identically to any experience bullet, rewrite it.
-- Each highlight should cover a DIFFERENT strength area (e.g., one technical, one business impact, one scale/volume)
+- Generate exactly 3 bullet-point highlights. These are NOT metric summaries — they are UNIQUE qualitative differentiators that distinguish this candidate for THIS specific role.
+- Format: "[Skill/strength] demonstrated through [specific context]" — NO raw numbers, NO dashboard counts, NO record counts. 
+- Example good highlights: "Advanced SQL pipeline engineering proven across large-scale retail and logistics datasets", "Track record of translating complex analytics into executive-level strategic recommendations", "Hands-on experience with risk modeling and predictive analytics using scikit-learn and SHAP"
+- Example BAD highlights (BANNED): "Built 18+ dashboards...", "Analyzed 550K records...", "Saved 500+ hours..." — these just repeat bullet metrics.
 
 SKILLS PROFICIENCY:
 - For the top 3-5 most important skills, add proficiency level in parentheses: (Advanced), (Proficient), or (Intermediate)
